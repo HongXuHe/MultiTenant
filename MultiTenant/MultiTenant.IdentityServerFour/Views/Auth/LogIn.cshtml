@@ -1,0 +1,30 @@
+﻿@model MultiTenant.IdentityServerFour.Models.LoginViewModel
+
+<div class="row">
+    <div class="col-md-12">
+        <h2 class="text-center">Please Login</h2>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6 offset-md-3">
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <form asp-action="LogIn" method="post">
+            <div class="form-group">
+                <label asp-for="UserName">UserName</label>
+                <input asp-for="UserName" class="form-control" placeholder="Enter UserName">
+            </div>
+            <div class="form-group">
+                <label asp-for="Password">Password</label>
+                <input asp-for="Password" class="form-control" placeholder="Password">
+            </div>
+            <div class="form-group">
+                <input type="hidden" asp-for="ReturnUrl" value="@ViewBag.ReturnUrl">
+            </div>
+            @*<div class="form-group form-check">
+                <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                <label class="form-check-label" for="exampleCheck1">Check me out</label>
+            </div>*@
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</div>
