@@ -1,24 +1,30 @@
-using IdentityServer4;
 using IdentityServer4.Services;
-using IdentityServer4.Test;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using MultiTenant.Entities;
 using MultiTenant.IdentityServerFour.Models;
-using System;
 using System.Threading.Tasks;
 
 namespace MultiTenant.IdentityServerFour.Controllers
 {
     public class AuthController : Controller
     {
-        private readonly TestUserStore _testUserStore;
         private readonly IIdentityServerInteractionService _interactionService;
-        public AuthController(TestUserStore testUserStore, IIdentityServerInteractionService interactionService)
-        {
-            _interactionService = interactionService;
-            _testUserStore = testUserStore;
+        private readonly UserManager<Id4User> _userManager;
+        private readonly SignInManager<Id4User> _signInManager;
+        private readonly ILogger<AuthController> _logger;
 
+        public AuthController(IIdentityServerInteractionService interactionService,
+                                UserManager<Id4User> userManager,
+                                SignInManager<Id4User> signInManager,
+                                ILogger<AuthController> logger)
+        {
+
+            _interactionService = interactionService;
+            _userManager = userManager;
+            _signInManager = signInManager;
+            _logger = logger;
         }
 
         [HttpGet]
@@ -27,7 +33,6 @@ namespace MultiTenant.IdentityServerFour.Controllers
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }
-
         /// <summary>
         /// login
         /// </summary>
@@ -38,22 +43,24 @@ namespace MultiTenant.IdentityServerFour.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = _testUserStore.FindByUsername(model.UserName);
-                if (user != null)
+                var user = await _userManager.FindByEmailAsync(model.UserEmail);
+                if (user != null &&user.SoftDelete==false)
                 {
-                    var IsVaildUser = _testUserStore.ValidateCredentials(model.UserName, model.Password);
-                    if (IsVaildUser)
+                    var signInRes = await _signInManager.PasswordSignInAsync(user, model.Password, true, false);
+                    if (signInRes.Succeeded)
                     {
-                        var identityUser = new IdentityServerUser(user.SubjectId)
+                        _logger.LogInformation("User {0} log in", user.Email);
+                        if(model.ReturnUrl != null)
                         {
-                            DisplayName = user.Username
-                        };
-                        await HttpContext.SignInAsync(identityUser, new AuthenticationProperties() { IsPersistent = true, ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(30) });
-                        return Redirect(model.ReturnUrl);
+                            return Redirect(model.ReturnUrl);
+                        }
+                        return Redirect("~/");
                     }
                     else
                     {
-                        ModelState.AddModelError("user or password not correct", "user or password not correct");
+                        ModelState.AddModelError("UserName,Password Error", "Your UserName Or Password is Wrong");
+                        ViewBag.ReturnUrl = model.ReturnUrl;
+                        return View();
                     }
                 }
                 else
@@ -73,11 +80,21 @@ namespace MultiTenant.IdentityServerFour.Controllers
             else
             {
                 var context = await _interactionService.GetLogoutContextAsync(logoutId);
-                
-                await HttpContext.SignOutAsync();
+                _logger.LogInformation("User {0} log out", User.Identity.Name);
+                await _signInManager.SignOutAsync();
+               
                 return Redirect(context.PostLogoutRedirectUri);
             }
             return View("Error");
+        }
+
+        public async Task<IActionResult> AccessDenied()
+        {
+            if (User?.Identity.IsAuthenticated == true)
+            {
+               await _signInManager.SignOutAsync();
+            }
+                return View();
         }
     }
 }

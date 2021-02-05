@@ -1,0 +1,21 @@
+﻿@using MultiTenant.IdentityServerFour.Models.ApiResource
+@model IEnumerable<ApiResourceVM>
+
+<div class="row">
+    <div class="col-md-12">
+        <h2 class="text-center">ApiResourceList</h2>
+    </div>
+    <div class="col-md-6 offset-md-3">
+        <p><a href="~/Home/CreateApiResouce" class="btn btn-success">Create</a></p>
+        <ul class="list-group">
+            @foreach (var item in Model)
+            {
+                <li class="list-group-item">@item.DisplayName</li>
+            }
+        </ul>
+
+    </div>
+    <div class="offset-md-3 offset-md-9">
+        <p><a href="~/Home/Index" class="btn btn-primary">Return To Home</a></p>
+    </div>
+</div>

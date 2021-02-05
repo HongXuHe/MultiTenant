@@ -13,7 +13,7 @@ namespace MultiTenant.IdentityServerFour
             return new List<ApiResource>
             {
                 new ApiResource("api1","API1"){
-                    Scopes ={"scope1"}
+                    Scopes ={"scope1"},
                 }
             };
         }
@@ -42,6 +42,7 @@ namespace MultiTenant.IdentityServerFour
                 new Client()
                 {
                     ClientId="clientid",
+                    ClientName="ClientIdSample",
                     ClientSecrets={new Secret("clientsecret".Sha256())},
                     AllowedGrantTypes=GrantTypes.ClientCredentials,
                     AllowedScopes={"scope1"}
@@ -50,6 +51,7 @@ namespace MultiTenant.IdentityServerFour
                 new Client()
                 {
                     ClientId="pwdclient",
+                     ClientName="PasswordSample",
                     ClientSecrets={new Secret("clientsecret".Sha256())},
                     AllowedGrantTypes=GrantTypes.ResourceOwnerPassword,
                     AllowedScopes={"scope1"},
@@ -59,11 +61,12 @@ namespace MultiTenant.IdentityServerFour
                 new Client()
                 {
                     ClientId="codeClient",
+                     ClientName="CodeSample",
                     ClientSecrets={new Secret("clientsecret".Sha256())},
                     AllowAccessTokensViaBrowser =true,
                     AllowedGrantTypes=GrantTypes.Code,
-                    RedirectUris={"https://localhost:5001/signin-oidc"},
-                    PostLogoutRedirectUris={"https://localhost:5001/signout-callback-oidc"},
+                    RedirectUris={"https://localhost:5002/signin-oidc"},
+                    PostLogoutRedirectUris={"https://localhost:5002/signout-callback-oidc"},
                     AllowedScopes ={"scope1",IdentityServerConstants.StandardScopes.OpenId,
                     IdentityServerConstants.StandardScopes.Profile}
                 }

@@ -34,11 +34,18 @@ namespace MultiTenant.Web
             .AddOpenIdConnect("oidc",setup=>{
                 setup.Authority="https://localhost:5000";
                 setup.ResponseType="code";
-                setup.ClientId="codeClient";
-                setup.ClientSecret="clientsecret";
+                setup.ClientId= "676d75ca-36ff-4ba7-ba73-b24366402eb7";
+                setup.ClientSecret= "secret";
                 setup.SaveTokens=true;
             });
-            
+
+            //services.AddAuthorization(configure =>
+            //{
+            //    configure.AddPolicy("P1", p =>
+            //    {
+            //        p.RequireClaim("PName", "PValue");
+            //    });
+            //});
             
         }
 

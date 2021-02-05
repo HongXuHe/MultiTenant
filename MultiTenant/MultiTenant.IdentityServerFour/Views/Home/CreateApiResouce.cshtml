@@ -1,0 +1,32 @@
+﻿@using MultiTenant.IdentityServerFour.Models.ApiResource
+@model CreateAPIResource
+
+<div class="row">
+    <div class="col-md-12">
+        <h2 class="text-center">Create API Resource</h2>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6 offset-md-3">
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <form asp-action="CreateApiResouce" method="post">
+            <div class="form-group">
+                <label asp-for="Name">Name</label>
+                <input asp-for="Name" class="form-control" placeholder="Enter Name">
+            </div>
+            <div class="form-group">
+                <label asp-for="DisplayName">DisplayName</label>
+                <input asp-for="DisplayName" class="form-control" placeholder="DisplayName">
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+                <div class="col-md-6">
+                    <button type="button" class="btn btn-warning cancel">Cancel</button>
+                </div>
+            </div>
+            
+        </form>
+    </div>
+</div>

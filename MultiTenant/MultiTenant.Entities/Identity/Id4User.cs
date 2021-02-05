@@ -1,18 +1,20 @@
-﻿using MultiTenant.Entities.Identity;
+﻿using Microsoft.AspNetCore.Identity;
+using MultiTenant.Entities.Identity;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace MultiTenant.Entities
 {
-    public class Id4User:BaseEntity
+    public class Id4User : IdentityUser<Guid>, IBaseEntity
     {
-        public string UserName { get; set; }
-        public string UserPasswordHash { get; set; }
-        public string UserEmail { get; set; }
-        public string UserPhoneNumber { get; set; }
-        public string  UserDepartment { get; set; }
-        public List<R_User_Role> Id4Roles { get; set; } = new List<R_User_Role>();
-        public List<R_User_Permission> Id4Permissions { get; set; } = new List<R_User_Permission>();
+        public DateTimeOffset CreateTime { get; set; } = DateTimeOffset.UtcNow;
+        public string CreateorId { get; set; }
+        public DateTimeOffset? ModifyTime { get; set; } = DateTimeOffset.UtcNow;
+        public string ModifierId { get; set; }
+        public bool SoftDelete { get; set; } = false;
+        public List<Id4User_Id4Permission> Id4Permissions { get; set; } = new List<Id4User_Id4Permission>();
+
+
     }
 }

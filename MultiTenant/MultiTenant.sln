@@ -7,9 +7,22 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MultiTenant.IdentityServerF
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MultiTenant.Web", "MultiTenant.Web\MultiTenant.Web.csproj", "{2E34BEAB-12EF-4023-97E4-7433668C4BA8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiTenant.Entities", "MultiTenant.Entities\MultiTenant.Entities.csproj", "{3FCE7787-2479-444E-A056-5DFE07C4B414}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MultiTenant.Entities", "MultiTenant.Entities\MultiTenant.Entities.csproj", "{3FCE7787-2479-444E-A056-5DFE07C4B414}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiTenant.Shared", "MultiTenant.Shared\MultiTenant.Shared.csproj", "{7299D827-555A-4018-A0DD-2DE6E8D3856F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MultiTenant.Shared", "MultiTenant.Shared\MultiTenant.Shared.csproj", "{7299D827-555A-4018-A0DD-2DE6E8D3856F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1 Entity", "1 Entity", "{0AE461D4-CD17-49BE-984A-328D7D44C790}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2 IdentityServer4", "2 IdentityServer4", "{8BBA39BE-9D06-434E-8934-EF627C9D8CBF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3 Api", "3 Api", "{95CFEEF2-CE2A-4C10-A977-4E61AEECFEEF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4 Shared", "4 Shared", "{84393823-8DF5-4B8E-8A71-CB6D8E5C04C6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F74062FF-4ED3-4BF1-954D-81DE3F4EFFFF}"
+	ProjectSection(SolutionItems) = preProject
+		ToDoNotes.txt = ToDoNotes.txt
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -72,6 +85,12 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{EA65EB6D-D20C-4990-83E0-E3A49E02289B} = {8BBA39BE-9D06-434E-8934-EF627C9D8CBF}
+		{2E34BEAB-12EF-4023-97E4-7433668C4BA8} = {95CFEEF2-CE2A-4C10-A977-4E61AEECFEEF}
+		{3FCE7787-2479-444E-A056-5DFE07C4B414} = {0AE461D4-CD17-49BE-984A-328D7D44C790}
+		{7299D827-555A-4018-A0DD-2DE6E8D3856F} = {84393823-8DF5-4B8E-8A71-CB6D8E5C04C6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6724DF79-39EF-4121-A831-B378D50F1431}

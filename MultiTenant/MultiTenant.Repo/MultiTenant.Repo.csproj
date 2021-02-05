@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\IRepo\MultiTenant.IRepo.csproj" />
+    <ProjectReference Include="..\MultiTenant.Entities\MultiTenant.Entities.csproj" />
+  </ItemGroup>
+
+</Project>

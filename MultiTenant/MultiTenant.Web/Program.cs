@@ -20,7 +20,7 @@ namespace MultiTenant.Web
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.UseStartup<Startup>().UseUrls("https://localhost:5001");
+                    webBuilder.UseStartup<Startup>().UseUrls("https://192.168.0.136:5001");
                 });
     }
 }

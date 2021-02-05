@@ -1,0 +1,21 @@
+﻿@using MultiTenant.IdentityServerFour.Models.Clients
+@model IEnumerable<ClientVM>
+
+<div class="row">
+    <div class="col-md-12">
+        <h2 class="text-center">Clients List</h2>
+    </div>
+    <div class="col-md-6 offset-md-3">
+        <p><a href="~/Home/CreateClient" class="btn btn-success">Create</a></p>
+        <ul class="list-group">
+            @foreach (var item in Model)
+            {
+            <a href="~/home/clientdetails?clientId=@item.ClientId"> <li class="list-group-item">@item.ClientName</li></a>
+            }
+            </ul>
+
+    </div>
+    <div class="offset-md-3 offset-md-9">
+        <p><a href="~/Home/Index" class="btn btn-primary">Return To Home</a></p>
+    </div>
+</div>

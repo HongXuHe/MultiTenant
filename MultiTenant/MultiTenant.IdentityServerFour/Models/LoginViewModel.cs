@@ -6,11 +6,10 @@ namespace MultiTenant.IdentityServerFour.Models
     {
 
         [Required]
-        public string UserName { get; set; }
+        public string UserEmail { get; set; }
         [Required]
         [DataType(DataType.Password)]
         public string Password { get; set; }
-        [Required]
         public string ReturnUrl { get; set; }
     }
 }
