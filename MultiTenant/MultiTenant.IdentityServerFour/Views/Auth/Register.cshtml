@@ -1,0 +1,27 @@
+﻿@model MultiTenant.IdentityServerFour.Models.RegisterVM
+
+<div class="row">
+    <div class="col-md-12">
+        <h2 class="text-center">Please Register</h2>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6 offset-md-3">
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <form asp-action="Register" method="post">
+            <div class="form-group">
+                <label asp-for="UserEmail">UserEmail</label>
+                <input asp-for="UserEmail" class="form-control" placeholder="Enter UserEmail">
+            </div>
+            <div class="form-group">
+                <label asp-for="UserName">UserName</label>
+                <input asp-for="UserName" class="form-control" placeholder="Enter UserName">
+            </div>
+            <div class="form-group">
+                <label asp-for="Password">Password</label>
+                <input asp-for="Password" class="form-control" placeholder="Password">
+            </div>
+            <button type="submit" class="btn btn-primary">Register</button>
+        </form>
+    </div>
+</div>

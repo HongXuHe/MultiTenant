@@ -43,10 +43,10 @@ namespace MultiTenant.Web
             //{
             //    configure.AddPolicy("P1", p =>
             //    {
-            //        p.RequireClaim("PName", "PValue");
+            //       // p.RequireClaim("PName", "PValue");
             //    });
             //});
-            
+
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

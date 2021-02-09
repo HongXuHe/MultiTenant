@@ -8,6 +8,7 @@ namespace MultiTenant.Web
         [Authorize]
         public IActionResult Index()
         {
+            var user = User;
             return View();
         }
 

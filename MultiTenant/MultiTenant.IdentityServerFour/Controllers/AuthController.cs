@@ -28,6 +28,45 @@ namespace MultiTenant.IdentityServerFour.Controllers
         }
 
         [HttpGet]
+        public IActionResult Register()
+        {
+            return View();
+        }
+        /// <summary>
+        /// login
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<IActionResult> Register(RegisterVM model)
+        {
+            if (ModelState.IsValid)
+            {
+                var userEmailFromDb = await _userManager.FindByEmailAsync(model.UserEmail.Trim());
+               // var userNameFromDb = await _userManager.FindByNameAsync(model.UserName.Trim());
+                if (userEmailFromDb != null)
+                {
+                    ModelState.AddModelError("User Exist", "User Already Exist");
+                    return View(model);
+                }
+                var user = new Id4User
+                {
+                    UserName = model.UserName.Trim(),
+                    Email = model.UserEmail.Trim()
+                };
+               var result =await _userManager.CreateAsync(user, model.Password.Trim());
+                if (result.Succeeded)
+                {
+                    return RedirectToAction(nameof(LogIn));
+                }
+                ModelState.AddModelError("Create User Failed", "Create User Failed");
+                return View(model);
+            }
+          
+            return View(model);
+        }
+
+        [HttpGet]
         public IActionResult LogIn(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
@@ -46,7 +85,7 @@ namespace MultiTenant.IdentityServerFour.Controllers
                 var user = await _userManager.FindByEmailAsync(model.UserEmail);
                 if (user != null &&user.SoftDelete==false)
                 {
-                    var signInRes = await _signInManager.PasswordSignInAsync(user, model.Password, true, false);
+                    var signInRes = await _signInManager.PasswordSignInAsync(user, model.Password,false, false);
                     if (signInRes.Succeeded)
                     {
                         _logger.LogInformation("User {0} log in", user.Email);
@@ -60,7 +99,7 @@ namespace MultiTenant.IdentityServerFour.Controllers
                     {
                         ModelState.AddModelError("UserName,Password Error", "Your UserName Or Password is Wrong");
                         ViewBag.ReturnUrl = model.ReturnUrl;
-                        return View();
+                        return View(model);
                     }
                 }
                 else
@@ -69,7 +108,7 @@ namespace MultiTenant.IdentityServerFour.Controllers
                 }
             }
             ViewBag.ReturnUrl = model.ReturnUrl;
-            return View();
+            return View(model);
         }
 
         public async Task<IActionResult> Logout(string logoutId)

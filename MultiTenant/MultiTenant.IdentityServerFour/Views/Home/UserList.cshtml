@@ -1,0 +1,30 @@
+﻿@using MultiTenant.IdentityServerFour.Models.Id4User
+@model IEnumerable<UserListVM>
+
+<div class="row">
+    <div class="col-md-12">
+        <h2 class="text-center">User List</h2>
+    </div>
+    <div class="col-md-6 offset-md-3">
+        <ul class="list-group">
+            @foreach (var item in Model)
+            {
+                <a href="~/home/userdetails?Id=@item.Id">
+                    <li class="list-group-item">
+                        @item.Name
+                        @if (User.IsInRole("Admin"))
+                        {
+                        <a href="~/home/EditUser?Id=@item.Id">Edit</a>
+                        }
+                    </li>
+                </a>
+
+
+            }
+        </ul>
+
+    </div>
+    <div class="offset-md-3 offset-md-9">
+        <p><a href="~/Home/Index" class="btn btn-primary">Return To Home</a></p>
+    </div>
+</div>

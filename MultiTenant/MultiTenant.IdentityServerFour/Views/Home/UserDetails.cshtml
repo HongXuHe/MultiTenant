@@ -1,0 +1,43 @@
+﻿@using MultiTenant.IdentityServerFour.Models.Id4User
+@model UserViewModel
+
+<div class="row">
+    <div class="col-md-12">
+        <h2 class="text-center">User Detials</h2>
+    </div>
+    <div class="col-md-6 offset-md-3">
+        <dl class="dl-horizontal">
+            <dt>User Id</dt>
+            <dd>@Model.Id.ToString()</dd>
+            <dt>User Name</dt>
+            <dd>@Model.UserName</dd>
+            <dt>User Email</dt>
+            <dd>@Model.UserEmail</dd>
+
+        </dl>
+        @if (Model.Roles.Any())
+        {
+            <h2>User Roles</h2>
+            <ul>
+                @foreach (var role in Model.Roles)
+                {
+                    <li>@role</li>
+                }
+            </ul>
+        }
+        @if (Model.Permissions.Any())
+        {
+            <h2>User Permissions</h2>
+            <ul>
+                @foreach (var per in Model.Permissions)
+                {
+                    <li>@per</li>
+                }
+            </ul>
+        }
+
+    </div>
+    <div class="col-md-12">
+        <p class="text-center"><a href="~/home/userlist" class="btn btn-primary">Go To List</a></p>
+    </div>
+</div>

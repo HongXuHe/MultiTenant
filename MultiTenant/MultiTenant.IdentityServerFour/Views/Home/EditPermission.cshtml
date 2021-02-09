@@ -1,0 +1,36 @@
+﻿@using MultiTenant.IdentityServerFour.Models.Id4Permission
+@model EditPermissionVM
+<div class="row">
+    <div class="col-md-12">
+        <h2 class="text-center">Edit Permission</h2>
+    </div>
+    <div class="col-md-6 offset-md-3">
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <form asp-action="EditPermission" method="post">
+            <input type="hidden" asp-for="PermissionId" />
+            <div class="form-group">
+                <label asp-for="PermissionName">PermissionName</label>
+                <input asp-for="PermissionName" class="form-control" placeholder="PermissionName" value="@Model.PermissionName">
+            </div>
+            <div class="form-group">
+                <label asp-for="PermissionValue">PermissionValue</label>
+                <input asp-for="PermissionValue" class="form-control" placeholder="PermissionValue" value="@Model.PermissionValue">
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+                <div class="col-md-6">
+                    <button type="button" class="btn btn-warning cancel">Cancel</button>
+                </div>
+            </div>
+        </form>
+
+    </div>
+
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <p class="text-center"><a href="~/home/rolelist" class="btn btn-primary">Go To List</a></p>
+    </div>
+</div>

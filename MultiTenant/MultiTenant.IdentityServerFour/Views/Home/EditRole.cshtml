@@ -1,0 +1,41 @@
+﻿@using MultiTenant.IdentityServerFour.Models.Id4Role
+@model EditRoleVM
+<div class="row">
+    <div class="col-md-12">
+        <h2 class="text-center">Edit Role</h2>
+    </div>
+    <div class="col-md-6 offset-md-3">
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <form asp-action="EditRole" method="post">
+            <input type="hidden" asp-for="RoleId" />
+            <div class="form-group">
+                <label asp-for="RoleName">RoleName</label>
+                <input asp-for="RoleName" class="form-control" placeholder="UserName" value="@Model.RoleName">
+            </div>
+        
+      
+            <h4>Role Permissions</h4>
+            @foreach (var perm in Model.AllPermissions)
+            {
+                <div class="form-group">
+                    <input type="checkbox" name="Permissions" value="@perm" checked="@Model.Permissions.Contains(perm)" /> @perm
+                </div>
+            }
+            <div class="row">
+                <div class="col-md-6">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+                <div class="col-md-6">
+                    <button type="button" class="btn btn-warning cancel">Cancel</button>
+                </div>
+            </div>
+        </form>
+
+    </div>
+
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <p class="text-center"><a href="~/home/rolelist" class="btn btn-primary">Go To List</a></p>
+    </div>
+</div>
