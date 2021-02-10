@@ -46,6 +46,7 @@ namespace MultiTenant.IdentityServerFour.Controllers
 
         public IActionResult Index()
         {
+            _logger.LogInformation("User{0} viewed home page", User?.Identity.Name);
             return View();
         }
 
@@ -60,6 +61,7 @@ namespace MultiTenant.IdentityServerFour.Controllers
         [HttpGet]
         public IActionResult CreateApiResouce()
         {
+            _logger.LogInformation($"user {User.Identity.Name} visit createapiresource page");
             return View();
         }
 
@@ -103,6 +105,7 @@ namespace MultiTenant.IdentityServerFour.Controllers
 
         public IActionResult CreateClient()
         {
+            _logger.LogInformation($"user {User.Identity.Name} visit createclient page");
             return View();
         }
 
@@ -205,6 +208,7 @@ namespace MultiTenant.IdentityServerFour.Controllers
                 ClientName = client.ClientName,
                 LogoUri = client.LogoUri
             };
+            _logger.LogInformation($"user {User.Identity.Name} viewed clientdetails of {clientVm.ClientName}");
             return View(clientVm);
         }
 
@@ -213,7 +217,7 @@ namespace MultiTenant.IdentityServerFour.Controllers
         #region Id4 Users
         public async Task<IActionResult> UserList()
         {
-
+            _logger.LogInformation($"user {User.Identity.Name} visit Userlist page");
             var users = await _userManager.Users.Select(x => new UserListVM { Id = x.Id.ToString(), Name = x.UserName }).ToListAsync();
 
             return View(users);
@@ -221,6 +225,7 @@ namespace MultiTenant.IdentityServerFour.Controllers
 
         public async Task<IActionResult> UserDetails(string Id)
         {
+
             var user = await _userManager.FindByIdAsync(Id);
             var vmUser = new UserViewModel()
             {
@@ -228,6 +233,7 @@ namespace MultiTenant.IdentityServerFour.Controllers
                 UserName = user.UserName,
                 UserEmail = user.Email,
             };
+            _logger.LogInformation($"user {User.Identity.Name} visit UserDetails page of {vmUser.UserName}");
             vmUser.Roles = (await _userManager.GetRolesAsync(user)).ToList();
             var permissionIds = await _context.Id4User_Id4Permissions.Where(x => x.Id4UserId == user.Id).Select(x => x.Id4PermissionId).ToListAsync();
             foreach (var pId in permissionIds)
@@ -247,6 +253,7 @@ namespace MultiTenant.IdentityServerFour.Controllers
                 UserName = user.UserName,
                 UserEmail = user.Email,
             };
+            _logger.LogInformation($"user {User.Identity.Name} visit EditUser page of {vmUser.UserName}");
             vmUser.Roles = (await _userManager.GetRolesAsync(user)).ToList();
             var permissionIds = await _context.Id4User_Id4Permissions.Where(x => x.Id4UserId == user.Id).Select(x => x.Id4PermissionId).ToListAsync();
             foreach (var pId in permissionIds)
@@ -295,6 +302,7 @@ namespace MultiTenant.IdentityServerFour.Controllers
                 var result = await _userManager.RemoveFromRolesAsync(userFromDb, oldUserRoles);
                 if (result.Succeeded)
                 {
+                    _logger.LogInformation($"user {User.Identity.Name} edit user of {userFromDb.UserName}");
                     await _userManager.AddToRolesAsync(userFromDb, editVM.Roles);
                 }
                 userFromDb.Id4Permissions = permList;
@@ -311,6 +319,7 @@ namespace MultiTenant.IdentityServerFour.Controllers
 
         public async Task<IActionResult> RoleList()
         {
+            _logger.LogInformation($"user {User.Identity.Name} visit RoleList page");
             var roleList = await _roleManager.Roles.Select(x => new RoleListVM { RoleId = x.Id.ToString(), RoleName = x.Name }).ToListAsync();
             return View(roleList);
         }
@@ -318,6 +327,7 @@ namespace MultiTenant.IdentityServerFour.Controllers
         public async Task<IActionResult> EditRole(string roleId)
         {
             var roleFromDb = await _roleManager.FindByIdAsync(roleId);
+            _logger.LogInformation($"user {User.Identity.Name} visit EditRole page of {roleFromDb.Name}");
             var vmRole = new EditRoleVM();
             if(roleFromDb == null)
             {
@@ -368,6 +378,7 @@ namespace MultiTenant.IdentityServerFour.Controllers
                 roleFromDb.Id4Permissions = permList;
                 if (await _context.SaveChangesAsync() >= 0)
                 {
+                    _logger.LogInformation($"user {User.Identity.Name} edit role of {roleFromDb.Id}");
                     return RedirectToAction(nameof(RoleList));
                 }
             }
@@ -375,6 +386,7 @@ namespace MultiTenant.IdentityServerFour.Controllers
         }
         public async Task<IActionResult> CreateRole()
         {
+            _logger.LogInformation($"user {User.Identity.Name} visit Create role page");
             return View();
         }
         [HttpPost]
@@ -392,6 +404,7 @@ namespace MultiTenant.IdentityServerFour.Controllers
             });
             if (res.Succeeded)
             {
+                _logger.LogInformation($"user {User.Identity.Name} create role {roleVM.RoleName}");
                 return RedirectToAction(nameof(RoleList));
             }
             ModelState.AddModelError("Create Role Failed", "Create Role Failed");
@@ -444,6 +457,7 @@ namespace MultiTenant.IdentityServerFour.Controllers
                 }
                 if (await _context.SaveChangesAsync() >= 0)
                 {
+                    _logger.LogInformation($"user {User.Identity.Name} edit permission {permissionFromDb.Id}");
                     return RedirectToAction(nameof(PermissionList));
                 }
             }
@@ -470,6 +484,7 @@ namespace MultiTenant.IdentityServerFour.Controllers
             });
             if (await _context.SaveChangesAsync() >=0)
             {
+                _logger.LogInformation($"user {User.Identity.Name} create permission {addModel.PermissionName}");
                 return RedirectToAction(nameof(PermissionList));
             }
             ModelState.AddModelError("Create Permission Failed", "Create Permission Failed");

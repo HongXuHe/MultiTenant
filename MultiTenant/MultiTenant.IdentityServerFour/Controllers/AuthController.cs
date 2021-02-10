@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MultiTenant.IdentityServerFour.Controllers
 {
-    public class AuthController : Controller
+    public class AuthController : Id4BaseController
     {
         private readonly IIdentityServerInteractionService _interactionService;
         private readonly UserManager<Id4User> _userManager;
@@ -57,6 +57,7 @@ namespace MultiTenant.IdentityServerFour.Controllers
                var result =await _userManager.CreateAsync(user, model.Password.Trim());
                 if (result.Succeeded)
                 {
+                    _logger.LogInformation($"user {user.Email} registered");
                     return RedirectToAction(nameof(LogIn));
                 }
                 ModelState.AddModelError("Create User Failed", "Create User Failed");
@@ -131,6 +132,7 @@ namespace MultiTenant.IdentityServerFour.Controllers
         {
             if (User?.Identity.IsAuthenticated == true)
             {
+                _logger.LogInformation($"user {User.Identity.Name} try to login but access denied");
                await _signInManager.SignOutAsync();
             }
                 return View();

@@ -15,6 +15,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MultiTenant.Entities;
 using MultiTenant.IdentityServerFour.ApplicationModule;
+using MultiTenant.IdentityServerFour.ExceptionsHandlers;
 using MultiTenant.IdentityServerFour.InitData;
 using MultiTenant.IdentityServerFour.Profiles;
 using Serilog;
@@ -101,7 +102,12 @@ namespace MultiTenant.IdentityServerFour
         {
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
+                // app.UseDeveloperExceptionPage();
+                app.UseMiddleware<MultiTenantId4ExceptionHandler>();
+            }
+            else
+            {
+                app.UseMiddleware<MultiTenantId4ExceptionHandler>();
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
